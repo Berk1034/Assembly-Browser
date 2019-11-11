@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace Assembly_Browser
 {
-    public class Namespace
+    public class Class
     {
         public string Name { get; set; }
-        public ObservableCollection<Class> Classes { get; set; }
 
-        public Namespace(string name)
+        public Class(Type type)
         {
-            Name = name;
-            Classes = new ObservableCollection<Class>();
+            Name = type.Name;
         }
     }
 }

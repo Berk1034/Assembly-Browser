@@ -38,7 +38,7 @@ namespace Assembly_Browser
             foreach (Type type in Assembly)
             {
                 Namespace nmspace = new Namespace(type.Namespace);
-                nmspace.Classes.Add(type.Name);
+                nmspace.Classes.Add(new Class(type));
                 AddValue(nmspace);
             }
         }

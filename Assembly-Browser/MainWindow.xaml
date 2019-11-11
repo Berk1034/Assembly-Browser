@@ -19,6 +19,9 @@
                 <HierarchicalDataTemplate DataType="{x:Type local:Namespace}" ItemsSource="{Binding Path=Classes}">
                     <TextBlock Text="{Binding Name}"/>
                 </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:Class}">
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>
     </Grid>

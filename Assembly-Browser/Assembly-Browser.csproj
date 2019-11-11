@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="AssemblyBrowserModel.cs" />
     <Compile Include="AssemblyBrowserViewModel.cs" />
+    <Compile Include="Class.cs" />
     <Compile Include="Namespace.cs" />
     <Compile Include="RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
