@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -49,7 +50,22 @@ namespace Assembly_Browser
                             FilePath = openFileDialog.FileName;
                         }
                         AssemblyBrowserModel assemblyBrowser = new AssemblyBrowserModel(FilePath);
+                        Namespaces = assemblyBrowser.Namespaces;
                     }));
+            }
+        }
+
+        private ObservableCollection<Namespace> _namespaces { get; set; }
+        public ObservableCollection<Namespace> Namespaces
+        {
+            get
+            {
+                return _namespaces;
+            }
+            set
+            {
+                _namespaces = value;
+                OnPropertyChanged("Namespaces");
             }
         }
     }

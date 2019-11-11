@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,11 +10,15 @@ namespace Assembly_Browser
 {
     public class AssemblyBrowserModel
     {
+        private readonly ObservableCollection<Namespace> _namespaces = new ObservableCollection<Namespace>();
+        public readonly ObservableCollection<Namespace> Namespaces;
         public List<Type> CurrentAssembly = new List<Type>();
 
         public AssemblyBrowserModel(string path)
         {
             CurrentAssembly = LoadAssembly(path);
+            GetNamespaces(CurrentAssembly);
+            Namespaces = new ObservableCollection<Namespace>(_namespaces);
         }
 
         public List<Type> LoadAssembly(string path)
@@ -26,6 +31,21 @@ namespace Assembly_Browser
                 result.Add(type);
             }
             return result;
+        }
+
+        public void GetNamespaces(List<Type> Assembly)
+        {
+            foreach (Type type in Assembly)
+            {
+                Namespace nmspace = new Namespace(type.Namespace);
+                nmspace.Classes.Add(type.Name);
+                AddValue(nmspace);
+            }
+        }
+
+        private void AddValue(Namespace value)
+        {
+            _namespaces.Add(value);
         }
     }
 }
