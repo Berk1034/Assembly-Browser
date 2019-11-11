@@ -25,15 +25,5 @@ namespace Assembly_Browser
         {
             InitializeComponent();
         }
-
-        private void btnOpen_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Assembly|*.dll";
-            if(openFileDialog.ShowDialog() == true)
-            {
-                tbPath.Text = openFileDialog.FileName;
-            }
-        }
     }
 }
