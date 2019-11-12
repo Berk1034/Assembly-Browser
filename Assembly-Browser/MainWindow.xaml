@@ -12,7 +12,7 @@
     </Window.DataContext>
     <Grid>
         <Button Name="btnOpen" Content="Open..." HorizontalAlignment="Left" Margin="709,13,0,0" VerticalAlignment="Top" Width="75" Height="24" Command="{Binding Path=OpenCommand}"/>
-        <TextBox Name="tbPath" HorizontalAlignment="Left" Height="23" Margin="49,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="655"/>
+        <TextBox Name="tbPath" HorizontalAlignment="Left" Height="23" Margin="49,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="655" Text="{Binding Path=FilePath}"/>
         <Label Name="lblPath" Content="Path:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TreeView Name="tvAsmBrowser" HorizontalAlignment="Left" Height="369" Margin="10,41,0,0" VerticalAlignment="Top" Width="774" ItemsSource="{Binding Path=Namespaces}">
             <TreeView.Resources>
