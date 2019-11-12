@@ -19,13 +19,16 @@
                 <HierarchicalDataTemplate DataType="{x:Type local:Namespace}" ItemsSource="{Binding Path=Classes}">
                     <TextBlock Text="{Binding Name}"/>
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type local:Class}" ItemsSource="{Binding Path=Fields}">
+                <HierarchicalDataTemplate DataType="{x:Type local:Class}" ItemsSource="{Binding Path=Properties}">
                     <TextBlock Text="{Binding Name}"/>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type local:Method}">
                     <TextBlock Text="{Binding Signature}"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type local:Field}">
+                    <TextBlock Text="{Binding Signature}"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type local:Property}">
                     <TextBlock Text="{Binding Signature}"/>
                 </DataTemplate>
             </TreeView.Resources>

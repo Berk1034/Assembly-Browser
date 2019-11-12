@@ -13,6 +13,7 @@ namespace Assembly_Browser
         public string Name { get; set; }
         public ObservableCollection<Method> Methods { get; set; }
         public ObservableCollection<Field> Fields { get; set; }
+        public ObservableCollection<Property> Properties { get; set; }
 
         public Class(Type type)
         {
@@ -20,6 +21,7 @@ namespace Assembly_Browser
             Methods = new ObservableCollection<Method>();
             GetMethods(type);
             GetFields(type);
+            GetProperties(type);
         }
 
         public void GetMethods(Type type)
@@ -44,6 +46,18 @@ namespace Assembly_Browser
                 tmp.Add(field);
             }
             Fields = tmp;
+        }
+
+        public void GetProperties(Type type)
+        {
+            PropertyInfo[] properties = type.GetProperties();
+            ObservableCollection<Property> tmp = new ObservableCollection<Property>();
+            foreach (PropertyInfo propertyInfo in properties)
+            {
+                Property property = new Property(propertyInfo);
+                tmp.Add(property);
+            }
+            Properties = tmp;
         }
     }
 }
