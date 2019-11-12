@@ -38,8 +38,16 @@ namespace Assembly_Browser
             foreach (Type type in Assembly)
             {
                 Namespace nmspace = new Namespace(type.Namespace);
-                nmspace.Classes.Add(new Class(type));
-                AddValue(nmspace);
+                Namespace innernamespace = _namespaces.FirstOrDefault(namesp => namesp.Name == nmspace.Name);
+                if (innernamespace == default(Namespace))
+                {
+                    nmspace.Classes.Add(new Class(type));
+                    AddValue(nmspace);
+                }
+                else
+                {
+                    innernamespace.Classes.Add(new Class(type));
+                }
             }
         }
 
