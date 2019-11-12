@@ -12,12 +12,14 @@ namespace Assembly_Browser
     {
         public string Name { get; set; }
         public ObservableCollection<Method> Methods { get; set; }
+        public ObservableCollection<Field> Fields { get; set; }
 
         public Class(Type type)
         {
             Name = type.Name;
             Methods = new ObservableCollection<Method>();
             GetMethods(type);
+            GetFields(type);
         }
 
         public void GetMethods(Type type)
@@ -30,6 +32,18 @@ namespace Assembly_Browser
                 tmp.Add(method);
             }
             Methods = tmp;
+        }
+
+        public void GetFields(Type type)
+        {
+            FieldInfo[] fields = type.GetFields();
+            ObservableCollection<Field> tmp = new ObservableCollection<Field>();
+            foreach (FieldInfo fieldInfo in fields)
+            {
+                Field field = new Field(fieldInfo);
+                tmp.Add(field);
+            }
+            Fields = tmp;
         }
     }
 }
