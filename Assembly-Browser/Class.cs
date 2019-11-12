@@ -16,6 +16,7 @@ namespace Assembly_Browser
         public ObservableCollection<Method> Methods { get; set; }
         public ObservableCollection<Field> Fields { get; set; }
         public ObservableCollection<Property> Properties { get; set; }
+        public ObservableCollection<Constructor> Constructors { get; set; }
 
         public ICollection Collections
         {
@@ -23,9 +24,10 @@ namespace Assembly_Browser
             {
                 return new CompositeCollection()
                 {
-                    new CollectionContainer(){ Collection=Methods },
-                    new CollectionContainer(){ Collection=Fields },
-                    new CollectionContainer(){ Collection=Properties }
+                    new CollectionContainer(){ Collection = Methods },
+                    new CollectionContainer(){ Collection = Fields },
+                    new CollectionContainer(){ Collection = Properties },
+                    new CollectionContainer(){ Collection = Constructors }
                 };
             }
         }
@@ -67,6 +69,7 @@ namespace Assembly_Browser
             GetMethods(type, bindingFlags);
             GetFields(type, bindingFlags);
             GetProperties(type, bindingFlags);
+            GetConstructors(type, bindingFlags);
         }
 
         public void GetMethods(Type type, BindingFlags bindingFlags)
@@ -103,6 +106,18 @@ namespace Assembly_Browser
                 tmp.Add(property);
             }
             Properties = tmp;
+        }
+
+        public void GetConstructors(Type type, BindingFlags bindingFlags)
+        {
+            ConstructorInfo[] constructors = type.GetConstructors(bindingFlags);
+            ObservableCollection<Constructor> tmp = new ObservableCollection<Constructor>();
+            foreach(ConstructorInfo constructorInfo in constructors)
+            {
+                Constructor constructor = new Constructor(constructorInfo);
+                tmp.Add(constructor);
+            }
+            Constructors = tmp;
         }
     }
 }
