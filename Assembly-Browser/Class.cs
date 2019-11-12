@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace Assembly_Browser
 {
@@ -14,6 +16,19 @@ namespace Assembly_Browser
         public ObservableCollection<Method> Methods { get; set; }
         public ObservableCollection<Field> Fields { get; set; }
         public ObservableCollection<Property> Properties { get; set; }
+
+        public ICollection Collections
+        {
+            get
+            {
+                return new CompositeCollection()
+                {
+                    new CollectionContainer(){ Collection=Methods },
+                    new CollectionContainer(){ Collection=Fields },
+                    new CollectionContainer(){ Collection=Properties }
+                };
+            }
+        }
 
         public Class(Type type)
         {
