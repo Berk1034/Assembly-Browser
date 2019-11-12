@@ -26,6 +26,11 @@ namespace AssemblyBrowserUnitTests
             Assert.AreEqual(1, assemblyBrowser.Namespaces.Count);
         }
 
+        public void ClassParse_ShouldReturnNineClasses()
+        {
+            Assert.AreEqual(9, assemblyBrowser.Namespaces[0].Classes.Count);
+        }
+
         [TestMethod]
         public void ClassParse_ShouldReturnAssemblyBrowserModelClass()
         {
