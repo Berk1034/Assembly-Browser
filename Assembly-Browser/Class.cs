@@ -17,16 +17,46 @@ namespace Assembly_Browser
 
         public Class(Type type)
         {
-            Name = type.Name;
+            TypeAttributes attributes = type.Attributes;
+
+            if (attributes.HasFlag(TypeAttributes.Public))
+            {
+                Name = "public ";
+            }
+            else if (attributes.HasFlag(TypeAttributes.NotPublic))
+            {
+                Name = "private ";
+            }
+            else if (attributes.HasFlag(TypeAttributes.NestedFamily))
+            {
+                Name = "protected ";
+            }
+            else if (attributes.HasFlag(TypeAttributes.NestedAssembly))
+            {
+                Name = "internal ";
+            }
+
+            if (attributes.HasFlag(TypeAttributes.Interface))
+            {
+                Name = Name + "interface ";
+            }
+            else if (attributes.HasFlag(TypeAttributes.Class))
+            {
+                Name = Name + "class ";
+            }
+
+            Name = Name + type.Name;
             Methods = new ObservableCollection<Method>();
-            GetMethods(type);
-            GetFields(type);
-            GetProperties(type);
+
+            BindingFlags bindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
+            GetMethods(type, bindingFlags);
+            GetFields(type, bindingFlags);
+            GetProperties(type, bindingFlags);
         }
 
-        public void GetMethods(Type type)
+        public void GetMethods(Type type, BindingFlags bindingFlags)
         {
-            MethodInfo[] methods = type.GetMethods();
+            MethodInfo[] methods = type.GetMethods(bindingFlags);
             ObservableCollection<Method> tmp = new ObservableCollection<Method>();
             foreach (MethodInfo methodInfo in methods)
             {
@@ -36,9 +66,9 @@ namespace Assembly_Browser
             Methods = tmp;
         }
 
-        public void GetFields(Type type)
+        public void GetFields(Type type, BindingFlags bindingFlags)
         {
-            FieldInfo[] fields = type.GetFields();
+            FieldInfo[] fields = type.GetFields(bindingFlags);
             ObservableCollection<Field> tmp = new ObservableCollection<Field>();
             foreach (FieldInfo fieldInfo in fields)
             {
@@ -48,9 +78,9 @@ namespace Assembly_Browser
             Fields = tmp;
         }
 
-        public void GetProperties(Type type)
+        public void GetProperties(Type type, BindingFlags bindingFlags)
         {
-            PropertyInfo[] properties = type.GetProperties();
+            PropertyInfo[] properties = type.GetProperties(bindingFlags);
             ObservableCollection<Property> tmp = new ObservableCollection<Property>();
             foreach (PropertyInfo propertyInfo in properties)
             {

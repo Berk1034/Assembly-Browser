@@ -14,7 +14,43 @@ namespace Assembly_Browser
         public Method(MethodInfo methodinfo)
         {
             String[] param = methodinfo.GetParameters().Select(p => String.Format("{0} {1}", p.ParameterType.Name, p.Name)).ToArray();
-            Signature = String.Format("{0} {1} ({2})", methodinfo.ReturnType.Name, methodinfo.Name, String.Join(",", param));
+
+            string AccessModifier = "";
+            string Modifier = "";
+
+            MethodAttributes attr = methodinfo.Attributes;
+
+            if (attr.HasFlag(MethodAttributes.Public))
+            {
+                AccessModifier = "public";
+            }
+            else if (attr.HasFlag(MethodAttributes.Private))
+            {
+                AccessModifier = "private";
+            }
+            else if (attr.HasFlag(MethodAttributes.Family))
+            {
+                AccessModifier = "protected";
+            }
+            else if (attr.HasFlag(MethodAttributes.Assembly))
+            {
+                AccessModifier = "internal";
+            }
+
+            if (attr.HasFlag(MethodAttributes.Abstract))
+            {
+                Modifier = "abstract";
+            }
+            else if (attr.HasFlag(MethodAttributes.Virtual))
+            {
+                Modifier = "virtual";
+            }
+            else if (attr.HasFlag(MethodAttributes.Static))
+            {
+                Modifier = "static";
+            }
+
+            Signature = String.Format("{0} {1} {2} {3} ({4})", AccessModifier.ToString().ToLower(), Modifier, methodinfo.ReturnType.Name, methodinfo.Name, String.Join(",", param));
         }
     }
 }

@@ -12,7 +12,26 @@ namespace Assembly_Browser
         public string Signature { get; set; }
         public Property(PropertyInfo propertyinfo)
         {
-            Signature = propertyinfo.PropertyType.ToString() + propertyinfo.Name;
+            string AccessModifier = "";
+
+            if (propertyinfo.PropertyType.IsPublic)
+            {
+                AccessModifier = "public";
+            }
+            else if (propertyinfo.PropertyType.IsNotPublic)
+            {
+                AccessModifier = "private";
+            }
+            else if (propertyinfo.PropertyType.IsNestedFamily)
+            {
+                AccessModifier = "protected";
+            }
+            else if (propertyinfo.PropertyType.IsNestedAssembly)
+            {
+                AccessModifier = "internal";
+            }
+
+            Signature = AccessModifier + " " + propertyinfo.PropertyType.ToString() + " " + propertyinfo.Name;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Assembly_Browser
 
         public Namespace(string name)
         {
-            Name = name;
+            Name = "namespace " + name;
             Classes = new ObservableCollection<Class>();
         }
     }
