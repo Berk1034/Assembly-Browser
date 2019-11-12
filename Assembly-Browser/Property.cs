@@ -31,7 +31,7 @@ namespace Assembly_Browser
                 AccessModifier = "internal";
             }
 
-            Signature = AccessModifier + " " + propertyinfo.PropertyType.ToString() + " " + propertyinfo.Name;
+            Signature = AccessModifier + " " + propertyinfo.PropertyType.Name + " " + propertyinfo.Name;
         }
     }
 }

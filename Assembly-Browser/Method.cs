@@ -50,7 +50,7 @@ namespace Assembly_Browser
                 Modifier = "static";
             }
 
-            Signature = String.Format("{0} {1} {2} {3} ({4})", AccessModifier.ToString().ToLower(), Modifier, methodinfo.ReturnType.Name, methodinfo.Name, String.Join(",", param));
+            Signature = String.Format("{0} {1} {2} {3} ({4})", AccessModifier, Modifier, methodinfo.ReturnType.Name, methodinfo.Name, String.Join(",", param));
         }
     }
 }

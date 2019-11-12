@@ -40,7 +40,7 @@ namespace Assembly_Browser
                 Signature = Signature + "readonly ";
             }
 
-            Signature = Signature + fieldinfo.FieldType.ToString() + " " + fieldinfo.Name;
+            Signature = Signature + fieldinfo.FieldType.Name + " " + fieldinfo.Name;
         }
     }
 }
