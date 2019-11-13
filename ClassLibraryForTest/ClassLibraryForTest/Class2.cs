@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace ClassLibraryForTest
 {
-    public class Class2
+    public static class Class2
     {
-        public Class2()
+        public static List<int> NewList(int a)
         {
+            List<int> result = new List<int>{ a, a, a };
+            return result;
+        }
 
+        public static int Count(List<int> list)
+        {
+            return list.Count;
         }
     }
 }

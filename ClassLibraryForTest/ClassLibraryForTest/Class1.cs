@@ -10,6 +10,10 @@ namespace ClassLibraryForTest
     {
         public int a;
         public bool b { get; set; }
+        private string _Class1String;
+        protected string ProtectedString = "I am protected";
+        internal List<string> InternalList;
+
         public void Create(int a)
         {
             this.a = a;
@@ -17,8 +21,12 @@ namespace ClassLibraryForTest
         }
         public Class1(int a, bool b)
         {
-
+            this.a = a;
+            this.b = b;
         }
-        internal string c = "Lol";
+        private Class1(string s)
+        {
+            _Class1String = s;
+        }
     }
 }
