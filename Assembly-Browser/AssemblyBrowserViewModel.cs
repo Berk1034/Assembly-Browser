@@ -49,8 +49,11 @@ namespace Assembly_Browser
                         {
                             FilePath = openFileDialog.FileName;
                         }
-                        AssemblyBrowserModel assemblyBrowser = new AssemblyBrowserModel(FilePath);
-                        Namespaces = assemblyBrowser.Namespaces;
+                        if (FilePath != null)
+                        {
+                            AssemblyBrowserModel assemblyBrowser = new AssemblyBrowserModel(FilePath);
+                            Namespaces = assemblyBrowser.Namespaces;
+                        }
                     }));
             }
         }
