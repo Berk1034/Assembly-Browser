@@ -10,30 +10,20 @@ namespace AssemblyBrowserLibrary
 {
     public class AssemblyBrowserModel
     {
-        private readonly ObservableCollection<Namespace> _namespaces = new ObservableCollection<Namespace>();
-        public readonly ObservableCollection<Namespace> Namespaces;
-        public List<Type> CurrentAssembly = new List<Type>();
+        private readonly List<Namespace> _namespaces;
 
-        public AssemblyBrowserModel(string path)
+        public AssemblyBrowserModel()
         {
-            CurrentAssembly = LoadAssembly(path);
-            GetNamespaces(CurrentAssembly);
-            Namespaces = new ObservableCollection<Namespace>(_namespaces);
+            _namespaces = new List<Namespace>();
         }
 
-        public List<Type> LoadAssembly(string path)
+        public List<Namespace> LoadAssembly(string path)
         {
-            List<Type> result = new List<Type>();
             Assembly asm = Assembly.LoadFrom(path);
-            Type[] types = asm.GetTypes();
-            foreach (Type type in types)
-            {
-                result.Add(type);
-            }
-            return result;
+            return GetNamespaces(asm.GetTypes());
         }
 
-        public void GetNamespaces(List<Type> Assembly)
+        private List<Namespace> GetNamespaces(IEnumerable<Type> Assembly)
         {
             foreach (Type type in Assembly)
             {
@@ -49,6 +39,7 @@ namespace AssemblyBrowserLibrary
                     innernamespace.Classes.Add(new Class(type));
                 }
             }
+            return _namespaces;
         }
 
         private void AddValue(Namespace value)

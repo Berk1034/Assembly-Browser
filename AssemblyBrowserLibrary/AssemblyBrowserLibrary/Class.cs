@@ -4,18 +4,35 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace AssemblyBrowserLibrary
 {
     public class Class
     {
         public string Name { get; set; }
-        public ObservableCollection<Method> Methods { get; set; }
-        public ObservableCollection<Field> Fields { get; set; }
-        public ObservableCollection<Property> Properties { get; set; }
-        public ObservableCollection<Constructor> Constructors { get; set; }
+        public List<Method> Methods { get; set; }
+        public List<Field> Fields { get; set; }
+        public List<Property> Properties { get; set; }
+        public List<Constructor> Constructors { get; set; }
+
+
+        public ICollection Collections
+        {
+            get
+            {
+                return new CompositeCollection()
+                {
+                    new CollectionContainer(){ Collection = Methods },
+                    new CollectionContainer(){ Collection = Fields },
+                    new CollectionContainer(){ Collection = Properties },
+                    new CollectionContainer(){ Collection = Constructors }
+                };
+            }
+        }
 
         public Class(Type type)
         {
@@ -48,61 +65,67 @@ namespace AssemblyBrowserLibrary
             }
 
             Name = Name + type.Name;
-            Methods = new ObservableCollection<Method>();
+            Methods = new List<Method>();
 
             BindingFlags bindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
-            GetMethods(type, bindingFlags);
-            GetFields(type, bindingFlags);
-            GetProperties(type, bindingFlags);
-            GetConstructors(type, bindingFlags);
+            Methods = GetMethods(type, bindingFlags);
+            Fields = GetFields(type, bindingFlags);
+            Properties = GetProperties(type, bindingFlags);
+            Constructors = GetConstructors(type, bindingFlags);
         }
 
-        public void GetMethods(Type type, BindingFlags bindingFlags)
+        public List<Method> GetMethods(Type type, BindingFlags bindingFlags)
         {
             MethodInfo[] methods = type.GetMethods(bindingFlags);
-            ObservableCollection<Method> tmp = new ObservableCollection<Method>();
+            List<Method> tmp = new List<Method>();
             foreach (MethodInfo methodInfo in methods)
             {
-                Method method = new Method(methodInfo);
-                tmp.Add(method);
+                if(!methodInfo.IsSpecialName)
+                {
+                    Method method = new Method(methodInfo);
+                    tmp.Add(method);
+                }
             }
-            Methods = tmp;
+            return tmp;
         }
 
-        public void GetFields(Type type, BindingFlags bindingFlags)
+        public List<Field> GetFields(Type type, BindingFlags bindingFlags)
         {
             FieldInfo[] fields = type.GetFields(bindingFlags);
-            ObservableCollection<Field> tmp = new ObservableCollection<Field>();
+            List<Field> tmp = new List<Field>();
             foreach (FieldInfo fieldInfo in fields)
             {
-                Field field = new Field(fieldInfo);
-                tmp.Add(field);
+                if(fieldInfo.GetCustomAttribute<CompilerGeneratedAttribute>() == null)
+                {
+                    Field field = new Field(fieldInfo);
+                    tmp.Add(field);
+                }
             }
-            Fields = tmp;
+            return tmp;
         }
 
-        public void GetProperties(Type type, BindingFlags bindingFlags)
+        public List<Property> GetProperties(Type type, BindingFlags bindingFlags)
         {
             PropertyInfo[] properties = type.GetProperties(bindingFlags);
-            ObservableCollection<Property> tmp = new ObservableCollection<Property>();
+            List<Property> tmp = new List<Property>();
             foreach (PropertyInfo propertyInfo in properties)
             {
                 Property property = new Property(propertyInfo);
                 tmp.Add(property);
             }
-            Properties = tmp;
+            return tmp;
         }
 
-        public void GetConstructors(Type type, BindingFlags bindingFlags)
+        public List<Constructor> GetConstructors(Type type, BindingFlags bindingFlags)
         {
             ConstructorInfo[] constructors = type.GetConstructors(bindingFlags);
-            ObservableCollection<Constructor> tmp = new ObservableCollection<Constructor>();
+            List<Constructor> tmp = new List<Constructor>();
             foreach(ConstructorInfo constructorInfo in constructors)
             {
                 Constructor constructor = new Constructor(constructorInfo);
                 tmp.Add(constructor);
             }
-            Constructors = tmp;
+            return tmp;
         }
     }
 }

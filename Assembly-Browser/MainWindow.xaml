@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assembly_Browser"
+        xmlns:model="clr-namespace:AssemblyBrowserLibrary;assembly=AssemblyBrowserLibrary"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Assembly-Browser" Height="450" Width="800">
@@ -16,22 +17,22 @@
         <Label Name="lblPath" Content="Path:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TreeView Name="tvAsmBrowser" HorizontalAlignment="Left" Height="369" Margin="10,41,0,0" VerticalAlignment="Top" Width="774" ItemsSource="{Binding Path=Namespaces}">
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type local:Namespace}" ItemsSource="{Binding Path=Classes}">
+                <HierarchicalDataTemplate DataType="{x:Type model:Namespace}" ItemsSource="{Binding Path=Classes}">
                     <TextBlock Text="{Binding Name}"/>
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type local:Class}" ItemsSource="{Binding Path=Collections}">
+                <HierarchicalDataTemplate DataType="{x:Type model:Class}" ItemsSource="{Binding Path=Collections}">
                     <TextBlock Text="{Binding Name}"/>
                 </HierarchicalDataTemplate>
-                <DataTemplate DataType="{x:Type local:Method}">
+                <DataTemplate DataType="{x:Type model:Method}">
                     <TextBlock Text="{Binding Signature}"/>
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type local:Field}">
+                <DataTemplate DataType="{x:Type model:Field}">
                     <TextBlock Text="{Binding Signature}"/>
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type local:Property}">
+                <DataTemplate DataType="{x:Type model:Property}">
                     <TextBlock Text="{Binding Signature}"/>
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type local:Constructor}">
+                <DataTemplate DataType="{x:Type model:Constructor}">
                     <TextBlock Text="{Binding Signature}"/>
                 </DataTemplate>
             </TreeView.Resources>

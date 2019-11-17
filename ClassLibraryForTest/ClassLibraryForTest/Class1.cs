@@ -9,7 +9,7 @@ namespace ClassLibraryForTest
     public class Class1
     {
         public int a;
-        public bool b { get; set; }
+        public bool b { get; private set; }
         private string _Class1String;
         protected string ProtectedString = "I am protected";
         internal List<string> InternalList;

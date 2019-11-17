@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AssemblyBrowserLibrary;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace AssemblyBrowserUnitTests
 {
@@ -8,51 +10,62 @@ namespace AssemblyBrowserUnitTests
     public class AssemblyBrowserUnitTest
     {
         private AssemblyBrowserModel assemblyBrowser;
+        private List<Namespace> namespaces { get; set; }
+
         [TestInitialize]
         public void Initialize()
         {
-            assemblyBrowser = new AssemblyBrowserModel(AppDomain.CurrentDomain.BaseDirectory + "\\AssemblyBrowserLibrary.dll");
+            assemblyBrowser = new AssemblyBrowserModel();
+            namespaces = assemblyBrowser.LoadAssembly(AppDomain.CurrentDomain.BaseDirectory + "\\ClassLibraryForTest.dll");
+//            CurrentAssembly = assemblyBrowser.LoadAssembly(AppDomain.CurrentDomain.BaseDirectory + "\\ClassLibraryForTest.dll");
+//            namespaces = assemblyBrowser.GetNamespaces(CurrentAssembly);
         }
 
         [TestMethod]
         public void DLLLoad_ShouldLoadDLL()
         {
-            Assert.IsNotNull(assemblyBrowser);
+            Assert.IsNotNull(namespaces);
         }
 
         [TestMethod]
         public void NamespaceParse_ShouldReturnOneNamespace()
         {
-            Assert.AreEqual(1, assemblyBrowser.Namespaces.Count);
+            Assert.AreEqual(1, namespaces.Count);
         }
 
-        public void ClassParse_ShouldReturnNineClasses()
+        public void ClassParse_ShouldReturnTwoClasses()
         {
-            Assert.AreEqual(9, assemblyBrowser.Namespaces[0].Classes.Count);
-        }
-
-        [TestMethod]
-        public void ClassParse_ShouldReturnAssemblyBrowserModelClass()
-        {
-            Assert.AreEqual("public class AssemblyBrowserModel", assemblyBrowser.Namespaces[0].Classes[0].Name);
+            Assert.AreEqual(2, namespaces[0].Classes.Count);
         }
 
         [TestMethod]
-        public void ClassParse_ShouldReturnOneConstructor()
+        public void ClassParse_ShouldReturnpublicclassClass1()
         {
-            Assert.AreEqual(1, assemblyBrowser.Namespaces[0].Classes[0].Constructors.Count);
+            Assert.AreEqual("public class Class1", namespaces[0].Classes[0].Name);
         }
 
         [TestMethod]
-        public void ClassParse_ShouldReturnThreeFields()
+        public void ClassParse_ShouldReturnTwoConstructors()
         {
-            Assert.AreEqual(3, assemblyBrowser.Namespaces[0].Classes[0].Fields.Count);
+            Assert.AreEqual(2, namespaces[0].Classes[0].Constructors.Count);
         }
 
         [TestMethod]
-        public void ClassParse_ShouldReturnThreeMethods()
+        public void ClassParse_ShouldReturnFourFields()
         {
-            Assert.AreEqual(3, assemblyBrowser.Namespaces[0].Classes[0].Methods.Count);
+            Assert.AreEqual(4, namespaces[0].Classes[0].Fields.Count);
+        }
+
+        [TestMethod]
+        public void ClassParse_ShouldReturnOneProperty()
+        {
+            Assert.AreEqual(1, namespaces[0].Classes[0].Properties.Count);
+        }
+
+        [TestMethod]
+        public void ClassParse_ShouldReturnOneMethod()
+        {
+            Assert.AreEqual(1, namespaces[0].Classes[0].Methods.Count);
         }
     }
 }

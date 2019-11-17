@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AssemblyBrowserLibrary;
 
 namespace Assembly_Browser
 {
@@ -51,8 +52,8 @@ namespace Assembly_Browser
                         }
                         if (FilePath != null)
                         {
-                            AssemblyBrowserModel assemblyBrowser = new AssemblyBrowserModel(FilePath);
-                            Namespaces = assemblyBrowser.Namespaces;
+                            AssemblyBrowserModel assemblyBrowser = new AssemblyBrowserModel();
+                            Namespaces = new ObservableCollection<Namespace>(assemblyBrowser.LoadAssembly(FilePath));
                         }
                     }));
             }

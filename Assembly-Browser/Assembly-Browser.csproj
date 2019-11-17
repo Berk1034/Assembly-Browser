@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AssemblyBrowserLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AssemblyBrowserLibrary\AssemblyBrowserLibrary\bin\Debug\AssemblyBrowserLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,14 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AssemblyBrowserModel.cs" />
     <Compile Include="AssemblyBrowserViewModel.cs" />
-    <Compile Include="Class.cs" />
-    <Compile Include="Constructor.cs" />
-    <Compile Include="Field.cs" />
-    <Compile Include="Method.cs" />
-    <Compile Include="Namespace.cs" />
-    <Compile Include="Property.cs" />
     <Compile Include="RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

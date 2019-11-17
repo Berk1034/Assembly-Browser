@@ -10,6 +10,7 @@ namespace AssemblyBrowserLibrary
     public class Field
     {
         public string Signature { get; set; }
+
         public Field(FieldInfo fieldinfo)
         {
             FieldAttributes attributes = fieldinfo.Attributes;
